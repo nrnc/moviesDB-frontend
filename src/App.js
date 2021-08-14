@@ -1,4 +1,13 @@
-import { BrowserRouter as Router, Switch, Link, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Link,
+  Route,
+  useParams,
+} from "react-router-dom";
+import Admin from "./components/Admin";
+import Home from "./components/Home";
+import Movies from "./components/Movies";
 function App() {
   return (
     <Router>
@@ -25,6 +34,9 @@ function App() {
           </div>
           <div className="col-md-10">
             <Switch>
+              <Route path="/movies/:id">
+                <Movie />
+              </Route>
               <Route path="/admin">
                 <Admin />
               </Route>
@@ -42,13 +54,9 @@ function App() {
   );
 }
 
-function Admin() {
-  return <h1>Manage Catalogue</h1>;
+function Movie() {
+  let { id } = useParams();
+  return <h1>Movie {id}</h1>;
 }
-function Movies() {
-  return <h1>Movies</h1>;
-}
-function Home() {
-  return <h1>Home</h1>;
-}
+
 export default App;
