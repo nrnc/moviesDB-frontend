@@ -5,23 +5,36 @@ export default class Movies extends Component {
   state = {
     movies: [],
     isLoaded: false,
+    error: null,
   };
   componentDidMount() {
     fetch("http://localhost:4000/v1/movies")
       .then((res) => {
-        console.log(res);
+        console.log(res.status);
+        if (res.status !== 200) {
+          let err = Error;
+          err.message = "Invalid response code" + res.status;
+          this.setState({ error: err });
+        }
         return res.json();
       })
-      .then((json) => {
-        this.setState({
-          movies: json.movies,
-          isLoaded: true,
-        });
-      });
+      .then(
+        (json) => {
+          this.setState({
+            movies: json.movies,
+            isLoaded: true,
+          });
+        },
+        (err) => {
+          this.setState({ isLoaded: true });
+        }
+      );
   }
   render() {
-    const { movies, isLoaded } = this.state;
-    if (!isLoaded) {
+    const { movies, isLoaded, error } = this.state;
+    if (error) {
+      return <div>Error:{error.message}</div>;
+    } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
       return (

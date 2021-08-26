@@ -3,7 +3,6 @@ import {
   Switch,
   Link,
   Route,
-  useParams,
   useRouteMatch,
 } from "react-router-dom";
 import Admin from "./components/Admin";
@@ -76,7 +75,7 @@ function App() {
 }
 
 function CategoryPage() {
-  let { path, url } = useRouteMatch();
+  let { path } = useRouteMatch();
 
   return (
     <div>
