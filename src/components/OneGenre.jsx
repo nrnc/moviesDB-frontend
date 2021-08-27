@@ -5,6 +5,7 @@ export class OneGenre extends Component {
     movies: [],
     isLoaded: false,
     error: null,
+    genreName: "",
   };
   componentDidMount() {
     fetch(`http://localhost:4000/v1/genres/${this.props.match.params.id}`)
@@ -22,6 +23,7 @@ export class OneGenre extends Component {
           this.setState({
             movies: json.movies,
             isLoaded: true,
+            genreName: this.props.location.genreName,
           });
         },
         (err) => {
@@ -31,7 +33,7 @@ export class OneGenre extends Component {
   }
 
   render() {
-    let { movies, isLoaded, error } = this.state;
+    let { movies, isLoaded, error, genreName } = this.state;
     if (!movies) {
       movies = [];
     }
@@ -42,7 +44,7 @@ export class OneGenre extends Component {
     } else {
       return (
         <Fragment>
-          <h2>Genre :</h2>
+          <h2>Genre : {genreName}</h2>
           <div className="list-group">
             {movies.map((movie) => {
               return (

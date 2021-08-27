@@ -40,15 +40,18 @@ export default class Movies extends Component {
       return (
         <Fragment>
           <h2>Choose a Movie</h2>
-          <ul>
+          <div className="list-group">
             {movies.map((movie) => {
               return (
-                <li key={movie.id}>
-                  <Link to={`/movies/${movie.id}`}>{movie.title}</Link>
-                </li>
+                <Link
+                  className="list-group-item list-group-item-action"
+                  to={`/movies/${movie.id}`}
+                >
+                  {movie.title}
+                </Link>
               );
             })}
-          </ul>
+          </div>
         </Fragment>
       );
     }
