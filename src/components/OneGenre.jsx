@@ -1,14 +1,13 @@
 import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
-
-export default class Genres extends Component {
+export class OneGenre extends Component {
   state = {
-    genres: [],
+    movies: [],
     isLoaded: false,
     error: null,
   };
   componentDidMount() {
-    fetch("http://localhost:4000/v1/genres")
+    fetch(`http://localhost:4000/v1/genres/${this.props.match.params.id}`)
       .then((res) => {
         console.log(res.status);
         if (res.status !== 200) {
@@ -21,7 +20,7 @@ export default class Genres extends Component {
       .then(
         (json) => {
           this.setState({
-            genres: json.genres,
+            movies: json.movies,
             isLoaded: true,
           });
         },
@@ -30,8 +29,12 @@ export default class Genres extends Component {
         }
       );
   }
+
   render() {
-    const { genres, isLoaded, error } = this.state;
+    let { movies, isLoaded, error } = this.state;
+    if (!movies) {
+      movies = [];
+    }
     if (error) {
       return <div>Error:{error.message}</div>;
     } else if (!isLoaded) {
@@ -39,16 +42,19 @@ export default class Genres extends Component {
     } else {
       return (
         <Fragment>
-          <h2>Genres</h2>
-          <ul>
-            {genres.map((g) => {
+          <h2>Genre :</h2>
+          <div className="list-group">
+            {movies.map((movie) => {
               return (
-                <li>
-                  <Link to={`/genres/${g.id}`}>{g.genre_name}</Link>
-                </li>
+                <Link
+                  to={`/movies/${movie.id}`}
+                  className="list-group-item list-group-item-action"
+                >
+                  {movie.title}
+                </Link>
               );
             })}
-          </ul>
+          </div>
         </Fragment>
       );
     }

@@ -3,6 +3,7 @@ import Admin from "./components/Admin";
 import Genres from "./components/Genres";
 import Home from "./components/Home";
 import Movies from "./components/Movies";
+import { OneGenre } from "./components/OneGenre";
 import { OneMovie } from "./components/OneMovie";
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <div className="col-md-10">
             <Switch>
               <Route path="/movies/:id" component={OneMovie} />
+              <Route path="/genres/:id" component={OneGenre} />
               <Route exact path="/genres">
                 <Genres />
               </Route>
